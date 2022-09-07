@@ -1,3 +1,4 @@
+
 const initState = {
     SeatList: [ 
         {
@@ -187,17 +188,18 @@ const initState = {
     ]
 }
 const rootReducer = (state = initState, action) => {
-  console.log(state);
     switch(action.type){
         case 'seatlistselect/addSeatSelect':
-            return {
-                ...state,
-                SeatListSelect: [
-                    ...state.SeatListSelect,
-                    action.payload
-                ]
-            }
+            const soGhe = action.payload.soGhe;
+            const curentState = [...state.SeatList];
+            const foundIndex = curentState.findIndex( item => {   
+               return item.danhSachGhe.find( seat => seat.soGhe.includes(soGhe));
+            });
+            const foundIndexSeat = curentState[foundIndex].danhSachGhe.findIndex(seat => seat.soGhe.includes(soGhe));
+            curentState[foundIndex].danhSachGhe[foundIndexSeat].daDat = true;
             
+            return { ...state, SeatList: curentState, SeatListSelect:[...state.SeatListSelect, action.payload]} ;
+       
         default:
             return state;
     }
