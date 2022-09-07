@@ -4,3 +4,9 @@ export const addSeatList = (data) => {
         payload: data
     }
 }
+export const deleteSeatList = (soGhe) => {
+    return {
+        type: 'seatlistselect/deleteSeatSelect',
+        payload: soGhe
+    }
+}

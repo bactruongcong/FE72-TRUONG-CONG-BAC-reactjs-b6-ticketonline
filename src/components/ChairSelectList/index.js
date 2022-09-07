@@ -4,9 +4,14 @@ import style from './style.module.css';
 import { useSelector} from 'react-redux';
 import { seatListOrderSelector } from '../../redux/selectors';
 
+
 function ChairSelectList(props) {
     const seatListSelect = useSelector(seatListOrderSelector);
-    console.log(seatListSelect);
+    const sumTotal = () => {
+        let total = 0;
+        seatListSelect.map(item => total += item.gia);
+        return total;
+    }
     return (
         <div>
             <h1 style={{color: '#fff'}}>Danh sách ghế được chọn</h1>
@@ -32,6 +37,12 @@ function ChairSelectList(props) {
                 </thead>
                 <tbody>
                     {seatListSelect.map( (item) =>  <ChairSelected key={item.soGhe} soGhe={item.soGhe} gia={item.gia}/>)}
+                    <tr>
+                        <th>Tổng cộng</th>
+                        <th colSpan={2}>
+                         { sumTotal()}
+                        </th>
+                    </tr>
                 </tbody>
             </table>
         </div>

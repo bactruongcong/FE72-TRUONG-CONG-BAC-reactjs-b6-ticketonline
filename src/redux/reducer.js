@@ -198,8 +198,20 @@ const rootReducer = (state = initState, action) => {
             const foundIndexSeat = curentState[foundIndex].danhSachGhe.findIndex(seat => seat.soGhe.includes(soGhe));
             curentState[foundIndex].danhSachGhe[foundIndexSeat].daDat = true;
             
-            return { ...state, SeatList: curentState, SeatListSelect:[...state.SeatListSelect, action.payload]} ;
-       
+            return {...state, SeatList: curentState ,SeatListSelect:[...state.SeatListSelect, action.payload]} ;
+            
+            case 'seatlistselect/deleteSeatSelect':
+              const soGhe2 = action.payload.soGhe;
+            const curentState2 = [...state.SeatList];
+            const foundIndex2 = curentState2.findIndex( item => {   
+               return item.danhSachGhe.find( seat => seat.soGhe.includes(soGhe2));
+            });
+            const foundIndexSeat2 = curentState2[foundIndex2].danhSachGhe.findIndex(seat => seat.soGhe.includes(soGhe2));
+            curentState2[foundIndex2].danhSachGhe[foundIndexSeat2].daDat = false;
+            const arraynew = [...state.SeatListSelect];
+            const findIndex = arraynew.findIndex( item => item.soGhe === soGhe2);
+            arraynew.splice(findIndex,1);
+            return {...state,SeatList:curentState2 , SeatListSelect: arraynew} ;
         default:
             return state;
     }
